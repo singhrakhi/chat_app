@@ -162,7 +162,6 @@ class _SignUpState extends State<SignUp> {
         Firebase.initializeApp();
         authMethods.signUpEmailAndPassword(emailTextEditingController.text,
             passTextEditingController.text).then((value){
-
             _databaseMethods.uploadUserInfo(userMap);
           Navigator.pushReplacement(
             context,
