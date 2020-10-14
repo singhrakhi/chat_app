@@ -1,8 +1,8 @@
+import 'package:chat_app/helper/helper_function.dart';
 import 'package:chat_app/services/auth.dart';
 import 'package:chat_app/services/database.dart';
 import 'package:chat_app/views/chatRooms.dart';
 import 'package:chat_app/widgets/widget.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -155,15 +155,21 @@ class _SignUpState extends State<SignUp> {
           "name": userNameTextEditingController.text,
           "email": emailTextEditingController.text
         };
+
+        HelperFunctions.saveUserPref(HelperFunctions.sharedPrefUserEmailKey,emailTextEditingController.text);
+        HelperFunctions.saveUserPref(HelperFunctions.sharedPrefUserNameKey,userNameTextEditingController.text);
+
         setState(() {
           isLoading = true;
         });
-        //
-        Firebase.initializeApp();
+
         authMethods.signUpEmailAndPassword(emailTextEditingController.text,
             passTextEditingController.text).then((value){
+              print(value);
             _databaseMethods.uploadUserInfo(userMap);
-          Navigator.pushReplacement(
+            HelperFunctions.saveUserLoginPref(true);
+
+            Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => ChatRoomScreen()),
           );

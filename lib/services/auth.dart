@@ -1,6 +1,5 @@
 import 'package:chat_app/model/users.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class AuthMethods{
 
@@ -10,7 +9,8 @@ class AuthMethods{
   }
   Future signInWithEmail(String email, String password) async{
     try{
-      User user  = (await _auth.signInWithEmailAndPassword(email: email, password: password)).user;
+      User user = (await _auth.signInWithEmailAndPassword(email: email, password: password)).user;
+      print(user);
       _getUserFromFirebase(user);
     } catch (e){
       print(e);
